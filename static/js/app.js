@@ -22,11 +22,62 @@ const populateDropdown = (metadata) => {
     }))
 };
 
+const bubbleChart = (sample) => {
+        
+    // Assign variables to the data points needed 
+    let sample_values = sample.sample_values;
+    let otu_labels = sample.otu_labels;       
+    let otu_ids = sample.otu_ids;
+    
+    let trace2 = {
+        x: otu_ids,
+        y: sample_values,
+        text: otu_labels,
+        mode: 'markers',
+        marker: {
+            size: sample_values,
+            color: otu_ids,
+            colorscale: 'Earth'
+        }
+    }
+    
+    let layout = {
+        title: "Top 10 OTU IDs Bubble Chart",
+        xaxis: { title: "OTU ID" },
+        yaxis: { title: "Sample Value" }
+    };
+    
+Plotly.newPlot("bubble", [trace2], layout);
+    };
+    
+const metaData = (subjectID) => {
+        let demographicInfo = getMetadata(subjectID, data.metadata);
+        let demoSelect = d3.select("#sample-metadata");
+    
+        demoSelect.html(
+        `id: ${demographicInfo.id} <br> 
+        ethnicity: ${demographicInfo.ethnicity} <br>
+        gender: ${demographicInfo.gender} <br>
+        age: ${demographicInfo.age} <br>
+        location: ${demographicInfo.location} <br>
+        bbtype: ${demographicInfo.bbtype} <br>
+        wfreq: ${demographicInfo.wfreq}`
+        );
+    }
+
+// function to get metadata for a subject
+const getMetadata = (subjectID, metadata) => {
+    return metadata.find((entry) => {
+        return entry.id === parseInt(subjectID);
+    });
+};
+
 const optionChanged = (subjectID) => {
     if (data !== null) {
         let sample = getSample(subjectID, data.samples);
         barChart(sample);
-        // bubbleChart(sample);
+        bubbleChart(sample);
+        metaData(subjectID);
     };
 };
 
@@ -59,6 +110,20 @@ const barChart = (sample) => {
     Plotly.newPlot("bar",data1, layout)
 };
 
+// Create a horizontal bar graph with the Top 10 OTUs in one individual
+    let trace1 = {
+        x: otuIds,
+        y: sampleValues,
+        type:'bar',
+        orientation:"h"
+    };
+
+    let data1 = [trace1];
+
+    let layout = {
+        title: "Top 10 OTUs"
+    }
+    Plotly.newPlot("bar",data1, layout);
 
 
 
