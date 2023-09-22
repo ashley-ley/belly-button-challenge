@@ -4,6 +4,9 @@
 
 This project aims to provide an interactive dashboard for exploring the Belly Button Biodiversity dataset, which catalogs the microbes inhabiting human navels. The dataset reveals the presence of operational taxonomic units (OTUs) in different individuals, with some OTUs being common among more than 70% of people.
 
+# Interactive Dashboard can be accessed here
+- https://yakopeca.github.io/belly-button-challenge/
+
 ## Dataset Information
 
 - The Belly Button Biodiversity dataset is available in the `samples.json` file.
